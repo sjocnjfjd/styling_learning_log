@@ -130,7 +130,13 @@ STATIC_URL = 'static/'
 # 静态文件的根目录，用于 collectstatic 收集静态文件
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',')
+import os
+
+# 使用环境变量并确保有一个合理的默认值
+CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', 'https://example.com').split(',')
+# 过滤掉任何可能的空字符串
+CSRF_TRUSTED_ORIGINS = [url for url in CSRF_TRUSTED_ORIGINS if url]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/dev/ref/settings/#default-auto-field
